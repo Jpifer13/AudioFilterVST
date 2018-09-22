@@ -1,42 +1,57 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 //==============================================================================
-FilterVstAudioProcessorEditor::FilterVstAudioProcessorEditor (FilterVstAudioProcessor& p)
+AudioFilterVstAudioProcessorEditor::AudioFilterVstAudioProcessorEditor (AudioFilterVstAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    setSize (400, 300);
+	addAndMakeVisible(Cutoff_knob = new Slider("Cutoff"));
+	Cutoff_knob->setSliderStyle(Slider::Rotary);
+	Cutoff_knob->setTextBoxStyle(Slider::NoTextBox, false, 100, 100);
+
+	addAndMakeVisible(Drive_knob = new Slider("Drive"));
+	Drive_knob->setSliderStyle(Slider::Rotary);
+	Drive_knob->setTextBoxStyle(Slider::NoTextBox, false, 100, 100);
+
+	addAndMakeVisible(Res_knob = new Slider("Res"));
+	Res_knob->setSliderStyle(Slider::Rotary);
+	Res_knob->setTextBoxStyle(Slider::NoTextBox, false, 100, 100);
+
+	addAndMakeVisible(Fat_knob = new Slider("Fat"));
+	Fat_knob->setSliderStyle(Slider::Rotary);
+	Fat_knob->setTextBoxStyle(Slider::NoTextBox, false, 100, 100);
+
+	Cutoff_Attachment = new AudioProcessorValueTreeState::SliderAttachment(p.getState(), "cutoff", *Cutoff_knob);
+	Drive_Attachment = new AudioProcessorValueTreeState::SliderAttachment(p.getState(), "drive", *Drive_knob);
+	Res_Attachment = new AudioProcessorValueTreeState::SliderAttachment(p.getState(), "res", *Res_knob);
+	Fat_Attachment = new AudioProcessorValueTreeState::SliderAttachment(p.getState(), "fat", *Fat_knob);
+
+
+    setSize (500, 200);
 }
 
-FilterVstAudioProcessorEditor::~FilterVstAudioProcessorEditor()
+AudioFilterVstAudioProcessorEditor::~AudioFilterVstAudioProcessorEditor()
 {
 }
 
 //==============================================================================
-void FilterVstAudioProcessorEditor::paint (Graphics& g)
+void AudioFilterVstAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 
     g.setColour (Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
+    //g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
 }
 
-void FilterVstAudioProcessorEditor::resized()
+void AudioFilterVstAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    
+	Cutoff_knob->setBounds(((getWidth() / 5) * 1) - (100 / 2), (getHeight() / 2) - (100 / 2), 100, 100);
+	Drive_knob->setBounds(((getWidth() / 5) * 2) - (100 / 2), (getHeight() / 2) - (100 / 2), 100, 100);
+	Res_knob->setBounds(((getWidth() / 5) * 3) - (100 / 2), (getHeight() / 2) - (100 / 2), 100, 100);
+	Fat_knob->setBounds(((getWidth() / 5) * 4) - (100 / 2), (getHeight() / 2) - (100 / 2), 100, 100);
+
 }

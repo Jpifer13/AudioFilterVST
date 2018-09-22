@@ -15,12 +15,12 @@
 //==============================================================================
 /**
 */
-class FilterVstAudioProcessor  : public AudioProcessor
+class AudioFilterVstAudioProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
-    FilterVstAudioProcessor();
-    ~FilterVstAudioProcessor();
+    AudioFilterVstAudioProcessor();
+    ~AudioFilterVstAudioProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -55,7 +55,11 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+	AudioProcessorValueTreeState& getState();
+
 private:
+
+	ScopedPointer<AudioProcessorValueTreeState> state;
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilterVstAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioFilterVstAudioProcessor)
 };

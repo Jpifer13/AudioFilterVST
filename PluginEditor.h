@@ -16,20 +16,31 @@
 //==============================================================================
 /**
 */
-class FilterVstAudioProcessorEditor  : public AudioProcessorEditor
+class AudioFilterVstAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
-    FilterVstAudioProcessorEditor (FilterVstAudioProcessor&);
-    ~FilterVstAudioProcessorEditor();
+    AudioFilterVstAudioProcessorEditor (AudioFilterVstAudioProcessor&);
+    ~AudioFilterVstAudioProcessorEditor();
 
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
 
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
-    FilterVstAudioProcessor& processor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilterVstAudioProcessorEditor)
+	//scopedPointer is a pointer that autimatically deletes itself when you fall out of scope. Very good for memory management
+	ScopedPointer<Slider> Cutoff_knob;
+	ScopedPointer<Slider> Res_knob;
+	ScopedPointer<Slider> Drive_knob;
+	ScopedPointer<Slider> Fat_knob;
+
+	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> Cutoff_Attachment;
+	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> Res_Attachment;
+	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> Drive_Attachment;
+	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> Fat_Attachment;
+
+
+    AudioFilterVstAudioProcessor& processor;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioFilterVstAudioProcessorEditor)
 };
